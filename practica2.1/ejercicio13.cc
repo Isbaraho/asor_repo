@@ -1,6 +1,5 @@
 
 #include <stdio.h>
-#include <time.h>
 #include <sys/time.h>
 #include <stdio.h>
  
@@ -10,12 +9,16 @@ int main ()
     struct timeval start,end;
     gettimeofday(&start,NULL);
     
-    while (i<1000000000)
+    while (i<1000000)
     {
         i++;
     }
     gettimeofday(&end,NULL);
-    long tEmpleado = end.tv_usec - start.tv_usec;
+    perror("hola");
+    long final = 1000*end.tv_sec + end.tv_usec;
+    long inicial = 1000*start.tv_sec + start.tv_usec;
+   
+    long tEmpleado = final -inicial;
     printf("Tiempo empleado %ld microsegundos", tEmpleado);
 
     return 1;
