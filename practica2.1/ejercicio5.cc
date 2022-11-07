@@ -14,6 +14,6 @@ int main()
     printf("%s",unameData.machine);
     printf("%s",unameData.nodename);
     printf("%s",unameData.__domainname);
-    printf("/n");
+    printf("\n");
     return 0;
 }
