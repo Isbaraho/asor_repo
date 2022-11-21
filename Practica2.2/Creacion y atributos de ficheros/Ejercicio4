@@ -1,1 +1,8 @@
+drwxr-xr-x 2 usuario_vms users 4096 nov 21 10:12  practica2.2
 
+usuario_vms@pto0602:~$ chmod 644 practica2.2
+
+drw-r--r-- 2 usuario_vms users 4096 nov 21 10:12  practica2.2
+
+usuario_vms@pto0602:~$ cd practica2.2
+bash: cd: practica2.2: Permiso denegado
