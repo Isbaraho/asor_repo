@@ -8,3 +8,5 @@ usuario_vms@pto0602:~$ mkdir prueba.txt
 mkdir: no se puede crear el directorio «prueba.txt»: El archivo ya existe
 usuario_vms@pto0602:~$ ls prueba.txt
 prueba.txt
+usuario_vms@pto0602:~$ ls -l prueba.txt
+-rw-r----- 1 usuario_vms users 5 nov 21 10:25 prueba.txt
