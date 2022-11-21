@@ -1,1 +1,2 @@
-
+usuario_vms@pto0602:~$ umask 027
+777-750->027
