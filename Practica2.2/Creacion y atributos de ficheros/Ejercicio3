@@ -1,0 +1,11 @@
+usuario_vms@pto0602:~$ ls -l fichero.txt
+-rw-r--r-- 1 usuario_vms users 5 nov 21 09:57 fichero.txt
+
+chmod u=rx,g=r,o= fichero:
+usuario_vms@pto0602:~$ chmod a+x fichero.txt
+usuario_vms@pto0602:~$ chmod g-x fichero.txt
+usuario_vms@pto0602:~$ chmod u-x fichero.txt
+usuario_vms@pto0602:~$ chmod u+w fichero.txt
+
+chmod 540 fichero:
+usuario_vms@pto0602:~$ chmod 645 fichero.txt
