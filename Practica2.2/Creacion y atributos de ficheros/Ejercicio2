@@ -1,0 +1,8 @@
+usuario_vms@pto0602:~$ ls -ld
+drwxr-xr-x 37 usuario_vms users 4096 nov 21 09:44 .
+
+usuario_vms@pto0602:~$ ls -ld Música
+drwxr-xr-x 2 usuario_vms users 4096 feb 22  2022 Música
+
+usuario_vms@pto0602:~$ ls -ld snap
+drwx------ 3 usuario_vms users 4096 jun 27  2018 snap
