@@ -36,6 +36,7 @@ int main (int argc,char**argv)
     {
       size+=buf.st_size;
     }
+    printf("Tamaño: %ld\n",size);
   closedir(fch);
     return 1;
 }
