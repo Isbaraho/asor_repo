@@ -1,1 +1,44 @@
+[cursoredes@localhost ~]$ ls -l
+total 12
+lrwxrwxrwx 1 cursoredes cursoredes   7 Nov 27 12:19 Denlace -> Denlace
+drwxr-xr-x 2 cursoredes cursoredes 116 Sep  9  2018 Desktop
+drwxr-xr-x 2 cursoredes cursoredes   6 Sep  9  2018 Documents
+drwxr-xr-x 2 cursoredes cursoredes   6 Sep  9  2018 Downloads
+lrwxrwxrwx 1 cursoredes cursoredes   6 Nov 27 12:19 enlace -> enlace
 
+[cursoredes@localhost ~]$ ls -i
+51269410 Denlace    51269382 enlace 
+
+[cursoredes@localhost ~]$ ls -l
+lrwxrwxrwx 2 cursoredes cursoredes   7 Nov 27 12:19 link-Denlace -> Denlace
+lrwxrwxrwx 2 cursoredes cursoredes   6 Nov 27 12:19 link-enlace -> enlace
+
+
+[cursoredes@localhost ~]$ ls -i
+51269410 link-Denlace 
+51269382 link-enlace
+
+[cursoredes@localhost ~]$ stat link-Denlace
+  File: ‘link-Denlace’ -> ‘Denlace’
+  Size: 7         	Blocks: 0          IO Block: 4096   symbolic link
+Device: fd00h/64768d	Inode: 51269410    Links: 2
+Access: (0777/lrwxrwxrwx)  Uid: ( 1000/cursoredes)   Gid: ( 1000/cursoredes)
+Access: 2022-11-27 12:19:32.078696837 +0100
+Modify: 2022-11-27 12:19:32.078696837 +0100
+Change: 2022-11-27 12:22:46.638765100 +0100
+ Birth: -
+ 
+[cursoredes@localhost ~]$ stat link-enlace
+  File: ‘link-enlace’ -> ‘enlace’
+  Size: 6         	Blocks: 0          IO Block: 4096   symbolic link
+Device: fd00h/64768d	Inode: 51269382    Links: 2
+Access: (0777/lrwxrwxrwx)  Uid: ( 1000/cursoredes)   Gid: ( 1000/cursoredes)
+Access: 2022-11-27 12:19:07.588303610 +0100
+Modify: 2022-11-27 12:19:07.588303610 +0100
+Change: 2022-11-27 12:22:37.083221499 +0100
+ Birth: -
+ 
+ 
+ En el caso de los enlaces duros el borrado es similar, pero hemos de entender que tanto origen como destino son el mismo fichero, 
+ ya que no son más que apuntadores al mismo espacio de memoria, 
+ si borramos uno no pasará nada, ya que seguiremos teniendo un puntero (fichero) al espacio de memoria dónde se encuentra la información.
