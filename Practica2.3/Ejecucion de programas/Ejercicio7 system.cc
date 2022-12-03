@@ -23,3 +23,5 @@ int main(int argc, char * * argv)
     printf("El comando terminó de ejecutarse \n");
 	exit(EXIT_SUCCESS);
 }
+
+
