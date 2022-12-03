@@ -7,7 +7,7 @@
 #include <sys/time.h>
 
 
-void printAtributos(char *type){
+void printDatos(char *type){
     struct rlimit a;
     int pid=getpid();
     printf("PID: %i \n",pid);
@@ -38,11 +38,11 @@ int main() {
     case 0:;
       pid_t mi_ses= setsid(); //Creacion de una nueva sesión
       char *ncwd= chdir("/tmp"); //Cambiamos el directorio a tmp
-      printAtributos("Hijo");
+      printDatos("Hijo");
         sleep(3);
       break;
     default:
-        printAtributos("Padre");
+        printDatos("Padre");
         int aux;
         wait(&aux);
         break;
