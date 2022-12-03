@@ -1,1 +1,18 @@
+SIGNAL TERM:
+[cursoredes@localhost ~]$ sleep 600
+Terminated
+[cursoredes@localhost ~]$ kill  2587
+SIGNAL SIGHUP:
+[cursoredes@localhost ~]$ sleep 600
+Hangup
+[cursoredes@localhost ~]$ kill -1 2687 
+SIGNAL KILL:
+[cursoredes@localhost ~]$ sleep 600
+Killed
+[cursoredes@localhost ~]$ kill -9 2767
+SIGNAL SIGRTMAX:
+[cursoredes@localhost ~]$ sleep 600
+Real-time signal 30
+[cursoredes@localhost ~]$ kill -64  2787
 
+La relacion es que se te muestra el tipo o algo relacionado con la señal enviada al proceso 
