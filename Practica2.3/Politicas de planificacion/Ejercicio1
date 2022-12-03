@@ -1,1 +1,11 @@
+[root@localhost cursoredes]# ps al
+F   UID   PID  PPID PRI  NI    VSZ   RSS WCHAN  STAT TTY        TIME COMMAND
+4     0  1159  1138  20   0 345840 50040 ep_pol Ssl+ tty1       0:01 /usr/bin/X :0 -background none -noreset -audit 4 -verbose -auth /run/gdm/auth-for-gdm-yOLUri/database -seat seat0 -nolisten tcp vt1
+0  1000  1678  1645  20   0 116608  3292 do_wai Ss   pts/0      0:00 bash
+4     0  1815  1678  20   0 220616  4052 poll_s S    pts/0      0:00 sudo su
+4     0  1816  1815  20   0 193816  2396 do_wai S    pts/0      0:00 su
+4     0  1819  1816  20   0 116604  3288 do_wai S    pts/0      0:00 bash
+4     0  1876  1819  10 -10 193816  2404 do_wai S<   pts/0      0:00 su
+4     0  1879  1876  10 -10 116608  3284 do_wai S<   pts/0      0:00 bash
+4     0  1913  1879  10 -10 153200  1500 -      R<+  pts/0      0:00 ps al
 
