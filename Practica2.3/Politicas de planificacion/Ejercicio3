@@ -1,1 +1,19 @@
 
+SCHED_OTHER
+Prioridad: 0 
+Maximo: 0
+Minimo: 0
+root@usuarioso-virtualbox:/home/usuarioso/Desktop# chrt -f -p 12 0 
+chrt: fallo al ejecutar 0: No existe el archivo o el directorio
+root@usuarioso-virtualbox:/home/usuarioso/Desktop# chrt -f -p 12 p2
+chrt: argumento PID incorrecto: 'p2'
+root@usuarioso-virtualbox:/home/usuarioso/Desktop# chrt -f -p 12 $$
+root@usuarioso-virtualbox:/home/usuarioso/Desktop# gcc -c p2.c -o p2.o
+root@usuarioso-virtualbox:/home/usuarioso/Desktop# gcc p2.o -o p2
+root@usuarioso-virtualbox:/home/usuarioso/Desktop# ./p2
+SCHED_FIFO
+Prioridad: 0 
+Maximo: 99
+Minimo: 1
+
+Cambia la politica de planificación, no así la prioridad. También cambian, como es lógico, los valores máximo y mínimo de la politica de planificación 
