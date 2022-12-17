@@ -10,17 +10,15 @@
 #include <unistd.h>
 
 int main(int argc, char *argv[]) {
-// Abre la tubería en modo sólo escritura
+// Asegurarse de que se haya proporcionado argumento
+if (argc< 2) {
+fprintf(stderr,"Se necesita un argumento\n");
+exit(1);
+}
+// Abrir la tuberia en modo solo escritura
 int fd = open("mi_tuberia", O_WRONLY);
-if (fd < 0) {
-perror("Error al abrir la tubería");
-return 1;
-}
-
-// Escribe el primer argumento en la tubería
-if (argc > 1) {
+// Escribir el primer argumento en la tubería
 write(fd, argv[1], strlen(argv[1]));
-}
 
 // Cierra la tubería
 close(fd);
