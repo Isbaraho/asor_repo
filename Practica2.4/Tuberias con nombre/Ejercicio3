@@ -1,1 +1,13 @@
+[cursoredes@localhost ~]$ mkfifo mi_tuberia
+[cursoredes@localhost ~]$ stat mi_tuberia
+  File: ‘mi_tuberia’
+  Size: 0         	Blocks: 0          IO Block: 4096   fifo
+Device: fd00h/64768d	Inode: 53013176    Links: 1
+Access: (0664/prw-rw-r--)  Uid: ( 1000/cursoredes)   Gid: ( 1000/cursoredes)
+Access: 2022-12-17 18:54:47.339471256 +0100
+Modify: 2022-12-17 18:54:47.339471256 +0100
+Change: 2022-12-17 18:54:47.339471256 +0100
+ Birth: -
+[cursoredes@localhost ~]$ ls -l mi_tuberia
+prw-rw-r-- 1 cursoredes cursoredes 0 Dec 17 18:54 mi_tuberia
 
