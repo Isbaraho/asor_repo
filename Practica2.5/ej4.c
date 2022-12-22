@@ -14,7 +14,7 @@
 int main(int argc, char **argv) 
 {
 	if (argc < 3) 
-  {
+  	{
 		printf("Use: ./ej1 host port\n");
 		return -1;
 	}
@@ -29,7 +29,7 @@ int main(int argc, char **argv)
 	int result = getaddrinfo(argv[1], argv[2], &hints, &list);
 
 	if (result != 0) 
-  {
+  	{
 		printf("Error while gettinf info: %s\n", gai_strerror(result));
 		return -1;
 	}
@@ -41,7 +41,7 @@ int main(int argc, char **argv)
   
   
 	if (sd == -1) 
-  {
+ 	 {
 		perror("Unable to open the socket");
 		return -1;
 	}
@@ -50,7 +50,7 @@ int main(int argc, char **argv)
 	setsockopt(sd, IPPROTO_IPV6, IPV6_V6ONLY, (void *)&off, sizeof(int));
 
 	if (bind(sd, list->ai_addr, list->ai_addrlen)) 
-  {
+  	{
 		perror("Unable to bind");
 		return -1;
 	}
@@ -64,27 +64,27 @@ int main(int argc, char **argv)
   
   
 	while (buf[0] != 'q') 
-  {
+  	{
 		int readsize = recvfrom(sd, &buf, 2*sizeof(char), 0, (struct sockaddr *) &input_addr, &input_len);
 		
 		if (readsize == -1) 
-    {
+    		{
 			perror("Error ocurred while reciving");
 			close(sd);
 			return -1;
 		}
 		else if (readsize == 0) 
-    {
+    		{
 			printf("Client has performed a shutdown\n");
 			buf[0] = 'q';
 		}
 		else 
-    {
+   		 {
 			char hostname[NI_MAXHOST];
 			char port[NI_MAXSERV];
 
 			if (getnameinfo((struct sockaddr *)&input_addr, input_len, hostname, NI_MAXHOST, port, NI_MAXSERV, 0)) 
-      {
+     			 {
 				perror("Error getting info from name");
 				return -1;
 			}
@@ -94,7 +94,7 @@ int main(int argc, char **argv)
       
       
 			if (buf[0] == 'd') 
-      {
+     			 {
 				time_t t;
 				struct tm *loctime;
 				char buffer[256];
@@ -104,12 +104,13 @@ int main(int argc, char **argv)
 	
 				int writesize = sendto(sd, buffer, strlen(buffer), 0, (struct sockaddr *)&input_addr, input_len);
 				if (writesize == -1) 
-        {
+        		{
 					perror("Error while sending back to client");
 					return -1;
-				}
-			} else if(buf[0] == 't') 
-      {
+			}
+			} 
+			else if(buf[0] == 't') 
+     			 {
 				time_t t;
 				struct tm *loctime;
 				char buffer[256];
@@ -121,11 +122,12 @@ int main(int argc, char **argv)
         
 				int writesize = sendto(sd, buffer, strlen(buffer), 0, (struct sockaddr *)&input_addr, input_len);
 				if (writesize == -1) 
-        {
+        			{
 					perror("Error while sending back to client");
 					return -1;
 				}
-			} else if (buf[0] == 'q')
+			} 
+			else if (buf[0] == 'q')
 				printf("Comando de finalización recibido, saliendo…\n");
 			else
 				printf("Comando no soportado %s", buf);
