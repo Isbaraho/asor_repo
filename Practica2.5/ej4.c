@@ -1,5 +1,6 @@
 #include <sys/types.h>
 #include <sys/socket.h>
+#include <sys/slect.h>
 #include <stdio.h>
 #include <errno.h>
 #include <arpa/inet.h>
