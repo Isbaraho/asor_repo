@@ -15,7 +15,7 @@ int main()
     int pgid=getpgid(pid);
     printf("PGID: %i \n",pgid);
       int sid=getsid(pid);
-    printf("PGID: %i \n",sid);
+    printf("SID: %i \n",sid);
     char *path = malloc(sizeof(char)*(4096 + 1));
     char *rpath = getcwd(path, 4096 + 1);
 
