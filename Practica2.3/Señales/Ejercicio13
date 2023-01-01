@@ -1,66 +1,61 @@
-
 #include <stdio.h>
+#include <signal.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <signal.h>
-#include <sys/types.h>
-#include <unistd.h>
 
-volatile int stop = 0;
+int cont = 1;
 
-static void handler(int signo)
+void hand()
 {
-	if (signo == SIGUSR1) stop = 1;
+    unlink("pep.txt");
+    printf("El fichero ha sido borrado \n");
+    cont = 0;
 }
 
-int main(int argc, char * * argv)
+void hand2() // SIGUSR1
 {
-	if (argc != 2) {
-        printf("Uso: %i segundos\n", argv[0]);
-		exit(EXIT_FAILURE);
-	}
+    sigset_t set;
+    sigemptyset(&set);
+    sigaddset(&set, SIGALRM);
+    sigprocmask(SIG_BLOCK, &set, NULL);
+    printf("Señal detenida\n");
+    cont = 0;
+}
 
-	// Perparar la máscara para desbloquear la señal SIGUSR1.
+int main(int argc, char ** argv)
+{
+    unsigned int a = 10;
 
-	sigset_t mask;
+    if(argc < 2)
+    {
+        fprintf(stderr, "Faltan argumentos");
+        return 0;
+    }
+    else if((a = atoi(argv[1])) == 0)
+    {
+        fprintf(stderr, "Error en argumentos");
+        return 0;
+    }
 
-	if (sigemptyset(& mask) == -1) perror("sigemptyset()");
+    struct sigaction act;
 
-	if (sigaddset(& mask, SIGUSR1) == -1) perror("sigaddset()");
+    sigaction(SIGALRM, NULL, &act);
+    act.sa_handler = hand;
+    sigaction(SIGALRM, &act, NULL);
 
-	// Desbloquear la señal SIGUSR1.
+    struct sigaction act2; sigaction(SIGUSR1, NULL, &act2);
+    act2.sa_handler = hand2;
+    sigaction(SIGUSR1, &act2, NULL);
 
-	if (sigprocmask(SIG_UNBLOCK, & mask, NULL) == -1) perror("sigprocmask()");
+   
 
-	// Preparar la estructura para el manejador.
+    alarm(a);
+    //kill(getpid(), SIGUSR1);
+    while(cont)
+    {
 
-	struct sigaction sa;
+    }
+  
 
-	sa.sa_handler = handler;
-
-	// Instalar el manejador.
-
-	if (sigaction(SIGUSR1, & sa, NULL) == -1) perror("sigaction()");
-
-	// Bucle de espera.
-
-	int seconds = atoi(argv[1]);
-	int i = 0;
-
-	while (i < seconds && ! stop) {
-		sleep(1);
-		i++;
-	}
-
-	// Comprobar y eliminar.
-
-	if (stop) {
-		printf("Abortado \n");
-	} else {
-		printf("Eliminando \n");
-
-		unlink(argv[0]);
-	}
-
-	exit(EXIT_SUCCESS);
+    return 0;
 }
