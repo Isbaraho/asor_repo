@@ -1,83 +1,94 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-#include <string.h>
+#include <errno.h>
 
-int main(int argc, char *argv[])
+int main(int argc, char **argv) 
+{
+    int p_h[2]; 
+    int h_p[2]; 
+    pid_t pid; 
+    int contM = 0;
+    char buf;
+    char buf2;
+    int i = 0;
+
+    if (pipe(p_h) == -1) 
     {
-    int p_h[2]; // Tubería padre-hijo
-    int h_p[2]; // Tubería hijo-padre
-    pid_t cpid; // Variable para almacenar el identificador del proceso hijo
-    char buf; // Buffer para leer y escribir en las tuberías
-    int count = 0; // Contador de mensajes enviados
-
-    // Creamos las tuberías
-    if (pipe(p_h) == -1 || pipe(h_p) == -1) 
-    {
-        perror("Error al crear las tuberías");
+        perror("Error al crear la tubería sin nombre p_h");
         exit(EXIT_FAILURE);
-    }
-
-    cpid = fork(); // Creamos un proceso hijo
-    if (cpid == -1) 
-    { // Si la llamada a fork() falló
-        perror("Error al crear el proceso hijo");
-        exit(EXIT_FAILURE);
-    }
-
-    if (cpid == 0) 
-    { // Si estamos en el proceso hijo
-        // Cerramos los extremos de escritura de las tuberías, ya que no los vamos a utilizar en el proceso hijo
-        close(p_h[1]);
-        close(h_p[1]);
-
-        // Leemos mensajes enviados por el padre y los escribimos en la salida estándar
-        while (read(p_h[0], &buf, 1) > 0) 
-        {
-            printf("Hijo: Mensaje recibido: %c\n", buf);
-            sleep(1); // Esperamos 1 segundo
-            write(h_p[1], "l", 1); // Enviamos confirmación al padre
-        }
-
-        // Cerramos los extremos de lectura de las tuberías
-        close(p_h[0]);
-        close(h_p[0]);
-
-        // Finalizamos el proceso hijo
-        exit(EXIT_SUCCESS);
     } 
-    else 
-    { // Si estamos en el proceso padre
-        // Cerramos los extremos de lectura de las tuberías, ya que no los vamos a utilizar en el proceso padre
-        close(p_h[0]);
-        close(h_p[0]);
+    
+    if (pipe(h_p) == -1) 
+    {
+        perror("Error al crear la tubería sin nombre h_p");
+        exit(EXIT_FAILURE);
+    } 
 
-        // Leemos mensajes de la entrada estándar y los enviamos al hijo
-        while (count < 10 && read(STDIN_FILENO, &buf, 1) > 0) 
-        {
-            write(p_h[1], &buf, 1); // Enviamos mensaje al hijo
-            read(h_p[1], &buf, 1); // Leemos confirmación del hijo
-            if (buf == 'l')
-            { // Si hemos recibido la confirmación
-                count++;
-            }
-            else if (buf == 'q')
-            { // Si hemos recibido la señal de finalización
-                break;
-            }
-        }
+    pid = fork(); 
+    switch(pid)
+    { 
+        case -1: 
 
-            // Cerramos los extremos de escritura de las tuberías
+            perror("Error al crear el proceso hijo");
+            exit(EXIT_FAILURE);
+
+        break;
+        case 0:
+
             close(p_h[1]);
+            close(h_p[0]);
+
+            while ((read(p_h[0], &buf, 1) > 0) && i < 10) 
+            {
+                if(buf == '\n') // No se por que, pero cuando se manda un mensaje cuenta el intro como parte de el 
+                {
+                    printf("Hijo: Mensaje recibido: Intro \n");
+                }
+                else
+                {
+                    printf("Hijo: Mensaje recibido: %c \n", buf);
+                }
+                sleep(1);
+
+                write(h_p[1], "l\n", 1);
+
+                i++;
+            }
+            write(h_p[1], "q", 1);
+
+            close(p_h[0]);
             close(h_p[1]);
 
-            // Esperamos a que el hijo finalice
-            wait(NULL);
+        break;
 
-            // Finalizamos el proceso padre
+        default:
+
+ 
+            close(p_h[0]);
+            close(h_p[1]);
+
+            while(read(STDIN_FILENO, &buf2,1) > 0 )
+            {
+                write(p_h[1], &buf2,1);
+                read(h_p[0], &buf2,1);
+
+                if(buf2 == 'q')
+                {
+                    break;
+                }
+            }
+
+            close(p_h[1]);
+            close(h_p[0]);
+
+            wait(NULL);
             exit(EXIT_SUCCESS);
+
+        break;  
     }
+
+    return 1;
 }
